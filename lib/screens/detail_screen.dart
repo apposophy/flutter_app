@@ -1,20 +1,20 @@
 // lib/screens/detail_screen.dart
 import 'package:flutter/material.dart';
-import '../data/fruit_data.dart';
+import '../data/dictionary_item.dart';
 
 class DetailScreen extends StatefulWidget {
-  final FruitInfo fruit;
+  final DictionaryItem fruit; // NEW
   final bool isFavorite;
   final Function(String) onToggleFavorite;
   final Function() toggleTheme;
 
   const DetailScreen({
     super.key,
-    required this.fruit,
+    required DictionaryItem fruit, // NEW signature
     required this.isFavorite,
     required this.onToggleFavorite,
     required this.toggleTheme,
-  });
+  }) : fruit = fruit;
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -72,7 +72,7 @@ class _DetailScreenState extends State<DetailScreen> {
               color: Theme.of(context).colorScheme.primary,
             ), */
             const SizedBox(height: 20),
-            
+
             // Fruit Name
             Text(
               widget.fruit.name,
@@ -82,7 +82,7 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
             const SizedBox(height: 10),
-            
+
             // Translations
             Container(
               padding: const EdgeInsets.all(12),
@@ -138,7 +138,7 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            
+
             // Definition
             const Text(
               'Definition:',
@@ -156,17 +156,19 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            
+
             // Favorite Status
             Text(
-              _isFavorite ? 'This is one of your favorites!' : 'Tap the heart to favorite',
+              _isFavorite
+                  ? 'This is one of your favorites!'
+                  : 'Tap the heart to favorite',
               style: TextStyle(
                 fontSize: 16,
                 color: _isFavorite ? Colors.red : Colors.grey,
               ),
             ),
             const SizedBox(height: 40),
-            
+
             // Back Button
             Center(
               child: ElevatedButton(
