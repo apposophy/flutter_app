@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> favoriteItems = [];
   final TextEditingController _searchController = TextEditingController();
   FruitInfo? _selectedFruit;
-  final bool _isNavBarCollapsed = true; // Track if the nav bar is collapsed
+  final bool _isNavBarCollapsed = false; // Track if the nav bar is collapsed
   final double _leftPanelWidth = 300.0; // Initial width of the left panel
   static const double _minLeftPanelWidth = 300.0;
   static const double _maxLeftPanelWidth = 450.0;

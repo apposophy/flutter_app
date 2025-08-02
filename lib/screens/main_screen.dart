@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'favorites_screen.dart';
-import 'info_screen.dart';
+// 1. Import the new UnlockedItemsScreen
+import 'unlocked_items_screen.dart'; // Adjust the path if necessary
 import '../data/fruit_data.dart';
 
 class MainScreen extends StatefulWidget {
@@ -12,6 +13,9 @@ class MainScreen extends StatefulWidget {
   final Function(String) unlockItem;
   final Function() resetKeys;
   final Function(String) isItemUnlocked;
+  // Assuming you have a way to get/set unlocked items in MyAppState
+  // For example, passing the Set and a function to check
+  final Set<String> unlockedItems; // Pass the Set of unlocked item names
   final Function() resetAllUnlocks;
 
   const MainScreen({
@@ -22,6 +26,7 @@ class MainScreen extends StatefulWidget {
     required this.unlockItem,
     required this.resetKeys,
     required this.isItemUnlocked,
+    required this.unlockedItems, // Add this parameter
     required this.resetAllUnlocks,
   });
 
@@ -92,11 +97,19 @@ class _MainScreenState extends State<MainScreen> {
     Widget currentScreen;
     switch (_currentIndex) {
       case 0:
-        currentScreen = InfoScreen(
+        // 2. Use UnlockedItemsScreen instead of InfoScreen
+        currentScreen = UnlockedItemsScreen(
+          // 3. Pass the correct parameters expected by UnlockedItemsScreen
+          unlockedItemNames: widget.unlockedItems, // Pass the Set
+          isItemUnlocked: widget.isItemUnlocked, // Pass the check function
           toggleTheme: widget.toggleTheme,
           keys: widget.keys,
-          resetKeys: widget.resetKeys,
-          resetAllUnlocks: widget.resetAllUnlocks,
+          currentIndex:
+              _currentIndex, // Might be needed if UnlockedScreen has nav logic
+          onTabTapped:
+              _onTabTapped, // Might be needed if UnlockedScreen has nav logic
+          favoriteItems: _favoriteItems,
+          onToggleFavorite: _toggleFavorite,
         );
         break;
       case 1:
@@ -129,11 +142,16 @@ class _MainScreenState extends State<MainScreen> {
         );
         break;
       default:
-        currentScreen = InfoScreen(
+        // 4. Default to UnlockedItemsScreen or HomeScreen
+        currentScreen = UnlockedItemsScreen(
+          unlockedItemNames: widget.unlockedItems,
+          isItemUnlocked: widget.isItemUnlocked,
           toggleTheme: widget.toggleTheme,
           keys: widget.keys,
-          resetKeys: widget.resetKeys,
-          resetAllUnlocks: widget.resetAllUnlocks,
+          currentIndex: _currentIndex,
+          onTabTapped: _onTabTapped,
+          favoriteItems: _favoriteItems,
+          onToggleFavorite: _toggleFavorite,
         );
     }
 
@@ -144,10 +162,11 @@ class _MainScreenState extends State<MainScreen> {
         onTap: _onTabTapped,
         type: BottomNavigationBarType.fixed,
         items: [
+          // 5. Update label and icon for Unlocked Items
           const BottomNavigationBarItem(
-            icon: Icon(Icons.info_outline),
-            activeIcon: Icon(Icons.info),
-            label: 'Info',
+            icon: Icon(Icons.lock_open), // Use lock_open icon
+            activeIcon: Icon(Icons.lock_open), // Use lock_open icon
+            label: 'Unlocked', // Update label
           ),
           const BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
@@ -171,11 +190,17 @@ class _MainScreenState extends State<MainScreen> {
     Widget currentScreen;
     switch (_currentIndex) {
       case 0:
-        currentScreen = InfoScreen(
+        // 6. Use UnlockedItemsScreen instead of InfoScreen
+        currentScreen = UnlockedItemsScreen(
+          // 7. Pass the correct parameters expected by UnlockedItemsScreen
+          unlockedItemNames: widget.unlockedItems,
+          isItemUnlocked: widget.isItemUnlocked,
           toggleTheme: widget.toggleTheme,
           keys: widget.keys,
-          resetKeys: widget.resetKeys,
-          resetAllUnlocks: widget.resetAllUnlocks,
+          currentIndex: _currentIndex,
+          onTabTapped: _onTabTapped,
+          favoriteItems: _favoriteItems,
+          onToggleFavorite: _toggleFavorite,
         );
         break;
       case 1:
@@ -206,11 +231,15 @@ class _MainScreenState extends State<MainScreen> {
         );
         break;
       default:
-        currentScreen = InfoScreen(
+        currentScreen = UnlockedItemsScreen(
+          unlockedItemNames: widget.unlockedItems,
+          isItemUnlocked: widget.isItemUnlocked,
           toggleTheme: widget.toggleTheme,
           keys: widget.keys,
-          resetKeys: widget.resetKeys,
-          resetAllUnlocks: widget.resetAllUnlocks,
+          currentIndex: _currentIndex,
+          onTabTapped: _onTabTapped,
+          favoriteItems: _favoriteItems,
+          onToggleFavorite: _toggleFavorite,
         );
     }
 

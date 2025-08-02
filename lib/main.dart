@@ -103,6 +103,8 @@ class MyAppState extends State<MyApp> {
         isItemUnlocked:
             _keyUnlockService.isItemUnlocked, // Direct pass of the check method
         resetAllUnlocks: resetAllUnlocks, // Wrapped reset unlocks method
+        unlockedItems: _keyUnlockService
+            .unlockedItems, // Pass the Set of unlocked item names from your service/state
       ),
       debugShowCheckedModeBanner: false,
     );

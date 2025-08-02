@@ -64,9 +64,23 @@ class _HomeTabletDesktopLayoutState extends State<HomeTabletDesktopLayout> {
   void initState() {
     super.initState();
     // Initialize state from widget parameters or defaults
-    _isNavBarCollapsed =
-        true; // Default state, could be passed as a parameter if needed
+    _isNavBarCollapsed = widget.isNavBarCollapsed;
     _leftPanelWidth = widget.initialLeftPanelWidth;
+  }
+
+  @override
+  void didUpdateWidget(covariant HomeTabletDesktopLayout oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isNavBarCollapsed != widget.isNavBarCollapsed) {
+      setState(() {
+        _isNavBarCollapsed = widget.isNavBarCollapsed; // Sync internal state
+      });
+    }
+    // You could do similar syncing for other parameters if needed
+    // e.g., if initialLeftPanelWidth was meant to be updatable
+    // if (oldWidget.initialLeftPanelWidth != widget.initialLeftPanelWidth) {
+    //   setState(() { _leftPanelWidth = widget.initialLeftPanelWidth; });
+    // }
   }
 
   void _updateLeftPanelWidth(double newWidth) {
@@ -102,8 +116,8 @@ class _HomeTabletDesktopLayoutState extends State<HomeTabletDesktopLayout> {
                 const SizedBox(height: 20),
                 CollapsibleNavItem(
                   // Use the new widget
-                  icon: Icons.info_outline,
-                  label: 'Info',
+                  icon: Icons.lock_open,
+                  label: 'Unlocked',
                   isActive: widget.currentIndex == 0,
                   onTap: () => widget.onTabTapped(0),
                   isCollapsed: _isNavBarCollapsed,
@@ -128,7 +142,7 @@ class _HomeTabletDesktopLayoutState extends State<HomeTabletDesktopLayout> {
                 const SizedBox(height: 20),
                 IconButton(
                   icon: Icon(
-                    Icons.info_outline,
+                    Icons.lock_open,
                     color: widget.currentIndex == 0
                         ? Theme.of(context).colorScheme.primary
                         : null,
